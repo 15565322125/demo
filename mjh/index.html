@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>孟锦涵</title>
+    <style>
+        html{
+            height: 100%;
+            font-size: 100px;
+        }
+        body{
+            height: 100%;
+            margin: 0;
+            background: url(img/bg.jpg) no-repeat center/cover;
+        }
+        .wrap{
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 2rem;
+            height: 2rem;
+            margin: auto;
+            transform-style: preserve-3d;
+        }
+        .wrap div{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: all .7s ease-out;
+        }
+        .wrap div img{
+            width: 100%;
+            height: 100%;
+        }
+        .active div:nth-child(1){
+            transform: rotateZ(0) translateZ(1rem);
+        }
+        .active div:nth-child(2){
+            transform: rotateY(180deg) translateZ(1rem);
+        }
+        .active div:nth-child(3){
+            transform: rotateY(-90deg) translateZ(1rem);
+        }
+        .active div:nth-child(4){
+            transform: rotateY(90deg) translateZ(1rem);
+        }
+        .active div:nth-child(5){
+            transform: rotateX(90deg) translateZ(1rem);
+        }
+        .active div:nth-child(6){
+            transform: rotateX(-90deg) translateZ(1rem);
+        }
+        .active{
+            animation: rotate 12s linear infinite;
+        }
+        @keyframes rotate{
+            0%{
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+            100%{
+                transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div><img src="img/01.jpg" alt=""></div>
+        <div><img src="img/02.jpg" alt=""></div>
+        <div><img src="img/03.jpg" alt=""></div>
+        <div><img src="img/04.jpg" alt=""></div>
+        <div><img src="img/05.jpg" alt=""></div>
+        <div><img src="img/06.jpg" alt=""></div>
+    </div>
+    <script>
+        window.addEventListener('load', function(){
+            var htmlElem = document.documentElement
+            this.addEventListener('resize', function(){
+                htmlElem.style.fontSize = htmlElem.clientWidth / 375 * 100 + 'px'
+            }, false)
+            setTimeout(function(){
+                document.getElementsByClassName('wrap')[0].classList.add('active')
+            }, 2000)
+        }, false)
+    </script>
+</body>
+</html>
