@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        ul{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://www.baidu.com" target="_blank" style="pointer-events: none;">百度</a>
+    <a href="tel:13569906821">13569906821</a>
+    <script>
+
+        var urlReg = /(http|https):\/\/w{3}\.(\w+)\.(\w+)/g
+        var url = 'https://www.jd.com'
+        console.log(urlReg.test(url))
+        console.log(url.search(urlReg))
+        console.log(url.match(urlReg))
+
+        console.log(urlReg.exec(url))
+        console.log(urlReg.exec(url))
+
+        var arr = [0, 1, 2, 3, 4, 4, 4, 5, 4]
+        // var re = arr.find(function(item){
+        //     return item > -9
+        // })
+        var obj = {
+            name : 'Lm'
+        }
+        var newArr = arr.filter((elem, index, arr) => arr.indexOf(elem) === index)
+        arr.forEach(function(){
+            console.log(this)
+        }, obj)
+        var r = arr.reduce(function(prev, elem, index, arr){
+            console.log(index)
+            return prev + elem
+        }, 10)
+    </script>
+</body>
+</html>
