@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html{
+            font-size: 100px;
+        }
+        body{
+            margin: 0;
+        }
+        ul{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        /* .scroll{
+            overflow: scroll;
+            width: 3rem;
+        }
+        .scroll::-webkit-scrollbar{
+            width: 0;
+            height: 0;
+        }
+        .scroll ul{
+            width: 4.8rem;
+        }
+        .scroll ul::after{
+            display: block;
+            clear: both;
+            content: "";
+        }
+        .scroll ul li{
+            float: left;
+            width: .6rem;
+            height: .3rem;
+            font-size: .16rem;
+            text-align: center;
+            line-height: .3rem;
+        } */
+
+        .wrapper{
+            position: relative;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+        .wrapper .side_bar{
+            position: absolute;
+            top: 0;
+            left: -1rem;
+            width: 1rem;
+            height: 100%;
+            background-color: pink;
+            transition: all .3s ease;
+        }
+        .wrapper .side_bar ul li{
+            padding-left: .03rem;
+            font-size: .16rem;
+            line-height: .24rem;
+        }
+        .wrapper.open .side_bar{
+            left: 0;
+        }
+        .wrapper.open .container{
+            overflow-y: scroll;
+            height: 100%;
+            transform: translateX(1rem);
+        }
+        .wrapper .container{
+            transition: all .3s ease;
+        }
+        .wrapper .container .nav_btn{
+            width: .5rem;
+            height: .5rem;
+            background-color: #ccc;
+            font-size: .4rem;
+            text-align: center;
+            line-height: .5rem;
+        }
+        .wrapper .container .nav_btn::before{
+            content: "=";
+        }
+        .wrapper.open .container .nav_btn::before{
+            content: "×";
+        }
+        .wrapper .container .txt{
+            padding: .1rem;
+            font-size: .16rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper open">
+        <div class="side_bar">
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ul>
+        </div>
+        <div class="container">
+            <nav>
+                <div class="nav_btn"></div>
+            </nav>
+            <div class="txt">
+                    Bootstrap 3
+ 
+                    Home
+                    
+                    Page one
+                    
+                    Second page
+                    
+                    Third page
+                    
+                    Dropdown 
+                    
+                    Page four
+                    
+                    Page 5
+                    
+                    Last page
+                   
+                   Awesome Bootstrap 3 Sidebar Navigation
+                   Originally authored by maridlcrmn on Bootsnipp and then converted to Less and customized further by j_holtslander who is building a collection of great Bootstrap 3 navbars.
+                   
+                   Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur. Nulla vitae elit libero, a pharetra augue.
+                   
+                   Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras mattis consectetur purus sit amet fermentum.
+                   
+                   Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas faucibus mollis interdum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.
+                   
+                   A heading in the mix.
+                   Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+                   
+                   Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur. Nulla vitae elit libero, a pharetra augue.
+                   Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras mattis consectetur purus sit amet fermentum.
+                   
+                   Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas faucibus mollis interdum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.
+                   
+                   Another heading for typography's sake.
+                   Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+                   
+                   Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Etiam porta sem malesuada magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur. Nulla vitae elit libero, a pharetra augue.
+                   
+                   Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras mattis consectetur purus sit amet fermentum.
+                   
+                   Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Maecenas faucibus mollis interdum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.
+            </div>
+        </div>
+    </div>
+    <!-- <div class="scroll">
+        <ul>
+            <li>首页</li>
+            <li>服装</li>
+            <li>家具</li>
+            <li>电器</li>
+            <li>娱乐</li>
+            <li>直播</li>
+            <li>动画</li>
+            <li>其他</li>
+        </ul>
+    </div> -->
+    <script>
+        var nav_btn = document.getElementsByClassName('nav_btn')[0],
+            wrapper = document.getElementsByClassName('wrapper')[0]
+        nav_btn.addEventListener('touchend', function(){
+            wrapper.classList.toggle('open')
+        }, false)
+
+
+        function add(a, b, c) {
+            return a + b + c
+        }
+        function curry(fn) {
+            var args = Array.prototype.slice.call(arguments, 1)
+            return function () {
+                var totalArgs = args.concat(Array.from(arguments))
+                if (totalArgs.length >= fn.length) {
+                    return fn(...totalArgs)
+                } else {
+                    totalArgs.unshift(fn)
+                    return curry(...totalArgs)
+                }
+            }
+        }
+
+        var a = curry(add, 1)
+        var b = a(2)
+
+        window.addEventListener('load', function(){
+            var htmlElem = document.documentElement
+            this.addEventListener('resize', function(){
+                htmlElem.style.fontSize = htmlElem.clientWidth / 375 * 100 + 'px'
+            }, false)
+        }, false)
+
+        var str = '245234263732424.785634232'
+        var reg = /\d(?=(\d{3})+\.)/g
+        str = str.replace(reg, function(kw, $1, $2){
+            console.log(kw)
+            return kw + ','
+        })
+        /* var result
+        while (result = reg.exec(str)) {
+            console.log(result)
+        } */
+
+
+        var date = '2019-10-25'
+        var reg1 = /(\d{4})-(\d{2})-(\d{2})/g
+        var result1
+        while (result1 = reg1.exec(date)) {
+            console.log(result1)
+        }
+    </script>
+</body>
+
+</html>
