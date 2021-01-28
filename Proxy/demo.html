@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		div{
+			overflow: hidden;
+			width: 200px;
+			padding: 10px;
+			border: 10px solid skyblue;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
+	</div>
+	<script type="text/javascript">
+		let obj = {
+			name: 'zhangsan',
+			age: 12,
+			fn(){
+				console.log(123)
+			}
+		}
+
+		Object.defineProperty(obj, 'name', {
+			get(){
+				console.log(this)
+			},
+			set(){
+				console.log(this)
+			}
+		})
+		Object.defineProperty(obj, 'fn', {
+			get(){
+				console.log(this)
+			},
+			set(){
+				console.log(this)
+			}
+		})
+
+
+
+
+		let obj1 = {
+			name: 'wangwu',
+			age: 123,
+			foo: function(){
+				console.log('foo')
+			}
+		}
+		let p1 = new Proxy(obj1, {
+			get(target, prop){
+				console.log(prop)
+			},
+			set(target, prop, value){
+				console.log(target, prop, value)
+			}
+		})
+
+
+
+		let search = '?username=zhangsan&pwd=123456&sex='
+		let reg = /([^?=&]+)=([^&]+)/g
+		console.log([...search.matchAll(reg)])
+		search.replace(reg, (k, $1, $2) => {
+			console.log(k, $1, $2)
+		})
+	</script>
+</body>
+</html>

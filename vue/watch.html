@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		{{ obj }}
+	</div>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript">
+		let vm = new Vue({
+			el: '#app',
+			data: {
+				obj: {
+					a: 1
+				}
+			},
+			watch: {
+				/*obj: {
+					handler(newVal, oldVal){
+						console.log(newVal, oldVal)
+					},
+					immediate: true, //组件加载立即触发回调函数执行
+					deep: true //深度观察
+				}*/
+				
+				// 优化：我们可以使用字符串的形式监听
+				'obj.a': {
+					handler(newVal, oldVal){
+						console.log(newVal, oldVal)
+					},
+					immediate: true,
+					// deep: true
+				},
+				'obj.b': {
+					handler(newVal, oldVal){
+						console.log(newVal, oldVal)
+					},
+					immediate: true,
+					// deep: true
+				}
+			}
+		})
+	</script>
+</body>
+</html>

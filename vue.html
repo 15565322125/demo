@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		#app{
+			position: relative;
+		}
+		#box{
+			position: absolute;
+			top: 0;
+			left: -8px;
+			width: 200px;
+			height: 300px;
+			border: 1px solid skyblue;
+			word-break: break-all;
+		}
+		#box.active{
+			left: 0;
+		}
+		.control-open{
+			position: absolute;
+			left: 100%;
+			top: 0;
+			width: 40px;
+			height: 60px;
+			background-color: skyblue;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<!-- {{ a }}
+		<div v-demo="a"></div>
+		<div v-demo="b"></div>
+		<div v-demo="c"></div> -->
+		<div id="box" v-open="flag">
+			{{ a }}
+		</div>
+		<input type="text" name="" v-model="ipt">
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script type="text/javascript">
+		const temp = {
+			data(){
+				return {
+					a: 'A组件',
+					flag: false
+				}
+			},
+			template: `
+				<div class="control-open" @click="toggleOpen">
+					{{ flag }}
+				</div>
+			`,
+			
+			watch: {
+				flag(){
+					this.init()
+				}
+			},
+			methods: {
+				toggleOpen(){
+					this.flag = !this.flag
+					this.init()
+				},
+				init(){
+					if(this.flag){
+						this.$el.parentNode.style.transform = 'translateX(-100%)'
+						this.$el.parentNode.classList.remove('active')
+					}else{
+						this.$el.parentNode.style.transform = 'translateX(0)'
+						this.$el.parentNode.classList.add('active')
+					}
+				}
+			}
+		}
+		let constructorA = Vue.extend(temp)
+		Vue.directive('open', {
+			bind(el, binding, vnode, oldVnode){
+				let instanceA = new constructorA({
+					el: document.createElement('div'),
+					data: {
+						icon: 'el-icon-arrow-left',
+						flag: binding.value
+					}
+				})
+				console.log(instanceA)
+				el.style.transition = 'all .3s ease'
+				el.appendChild(instanceA.$el)
+				
+				instanceA.init()
+
+				el.instance = instanceA
+			},
+			inserted(el, binding, vnode, oldVnode){
+
+			},
+			update(el, binding, vnode, oldVnode){
+				el.instance.flag = binding.value
+			}
+		})
+		Vue.directive('demo', {
+			bind(el, binding, vnode, oldVnode){
+				console.log('bind', el, binding, vnode, oldVnode)
+				el.innerHTML = binding.value
+			},
+			insert(el, binding, vnode, oldVnode){
+				console.log('insert', el, binding, vnode, oldVnode)
+			},
+			update(el, binding, vnode, oldVnode){
+				console.log('update', el, binding, vnode, oldVnode)
+			}
+		})
+		let vm = new Vue({
+			el: '#app',
+			data: {
+				a: 123,
+				b: 234,
+				c: 'abc',
+				flag: false
+			},
+			components: {
+				temp
+			},
+			watch: {
+				flag(){
+					console.log('parent')
+				}
+			},
+			computed: {
+				ipt: {
+					get(){
+						return this.a
+					},
+					set(val){
+						console.log(val)
+						this.a = val
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>

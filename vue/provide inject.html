@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<temp-a></temp-a>
+	</div>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript">
+		const tempB = {
+			// inject: ['color'],
+			inject: {
+				color: {
+					from: 'color',
+					default: 'blue'
+				},
+				fz: {
+					from: 'fontSize',
+					default: '12'
+				}
+			},
+			template: `<div>
+				tempB
+				{{ color }}
+				{{ fz }}
+			</div>`
+		}
+		const tempA = {
+			template: `<div>
+				tempA
+				<temp-b></temp-b>
+			</div>`,
+			components: {
+				tempB
+			}
+		}
+		let vm = new Vue({
+			el: '#app',
+			data: {
+				
+			},
+			provide(){
+				this.color = Vue.observable({
+					color: 'pink'
+				})
+				return {
+					color: this.color
+				}
+			},
+			components: {
+				tempA
+			}
+		})
+	</script>
+</body>
+</html>

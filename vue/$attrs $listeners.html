@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<temp-a a="1" :b="2" v-bind="{ name: 'name', age: 'age'}" @click="handleClick" @other="handle"></temp-a>
+	</div>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript">
+		const tempB = {
+			template: `<div>
+				tempB
+				{{ $attrs }}
+			</div>`
+		}
+		const tempA = {
+			props: ['name'],
+			template: `<div>
+				tempA
+				{{ $attrs }}
+				{{ name }}
+				<temp-b v-bind="$attrs"></temp-b>
+			</div>`,
+			components: {
+				tempB
+			},
+			created(){
+				console.log(this.$listeners)
+			}
+		}
+		new Vue({
+			el: '#app',
+			components: {
+				tempA
+			},
+			methods: {
+				handleClick(){
+					console.log('click')
+				},
+				handle(){
+					console.log('other')
+				}
+			}
+		})
+	</script>
+</body>
+</html>

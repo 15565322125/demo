@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<input type="file" name="" id="upload_file">
+	<script type="text/javascript">
+		upload_file.onchange = function(){
+			
+			var fr = new FileReader()
+			fr.onload = function(){
+				console.log(this.result)
+			}
+			fr.readAsBinaryString(this.files[0])
+			fr.onprogress = function(e){
+				console.log(e)
+			}
+		}
+	</script>
+</body>
+</html>

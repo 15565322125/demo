@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+
+	</style>
+</head>
+<body>
+	
+	<script type="text/javascript">
+		let tree = [
+			{
+				id: '1',
+				title: '节点1',
+				children: [
+					{
+						id: '1-1',
+						title: '节点1-1'
+					},
+					{
+						id: '1-2',
+						title: '节点1-2',
+						children: [
+							{
+								id: '1-2-1',
+								title: '节点1-2-1'
+							}
+						]
+					}
+				]
+			},
+			{
+				id: '2',
+				title: '节点2',
+				children: [
+					{
+						id: '2-1',
+						title: '节点2-1'
+					}
+				]
+			}
+		]
+
+		//广度优先
+		/*let items = [...tree], node
+		while(node = items.shift()){
+			console.log(node.title)
+			node.children && items.push(...node.children)
+		}*/
+		/*function treeForeach(tree, callback){
+			var list = [...tree], node
+			while(node = list.shift()){
+				callback(node)
+				node.children && node.children.length && list.push(...node.children)
+			}
+		}
+		treeForeach(tree, data => {
+			console.log(data)
+		})*/
+
+
+		//深度优先
+			//先序遍历
+		/*function treeForeach(tree, callback){
+			tree.forEach(item => {
+				callback(item)
+				item.children && item.children.length && treeForeach(item.children, callback)
+			})
+		}
+		treeForeach(tree, data => {
+			console.log(data)
+		})*/
+			//后序遍历
+		/*function treeForeach(tree, callback){
+			tree.forEach(item => {
+				item.children && item.children.length && treeForeach(item.children, callback)
+				callback(item)
+			})
+		}
+		treeForeach(tree, data => {
+			console.log(data)
+		})*/
+
+		//深度优先循环实现
+			//先序遍历
+		/*function treeForeach(tree, callback){
+			let list = [...tree], node
+			while(node = list.shift()){
+				callback(node)
+				node.children && node.children.length && list.unshift(...node.children)
+			}
+		}
+		treeForeach(tree, data => {
+			console.log(data)
+		})*/
+			//后序遍历
+		function treeForeach(tree, callback){
+			let node, list = [...tree], i = 0
+			while (node = list[i]) {
+				let childCount = node.children ? node.children.length : 0
+				if (!childCount || node.children[childCount - 1] === list[i - 1]) {
+					callback(node)
+					i++
+				} else {
+					list.splice(i, 0, ...node.children)
+				}
+			}
+		}
+		treeForeach(tree, data => {
+			console.log(data)
+		})
+	</script>
+</body>
+</html>

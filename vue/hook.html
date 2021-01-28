@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<component-a @hook:updated="handleUpdate"></component-a>
+	</div>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript">
+		const componentA = {
+			template: `<div @click="a = 2">
+				componentA
+				{{ a }}
+			</div>`,
+			data(){
+				return {
+					a: 1
+				}
+			}
+		}
+		new Vue({
+			el: '#app',
+			created(){
+				this.$on('hook:mounted', () => {
+					console.log(123)
+				})
+				
+			},
+			mounted(){
+				
+			},
+			methods: {
+				handleUpdate(){
+					console.log('qwe')
+				}
+			},
+			components: {
+				componentA
+			}
+		})
+	</script>
+</body>
+</html>

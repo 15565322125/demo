@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<a href="" id="json_link">json</a>
+	<script type="text/javascript">
+		let obj = {
+			a: '1',
+			b: 'b',
+			c: '张三'
+		}
+
+		let jsonObj = JSON.stringify(obj)
+		let b1 = new Blob(jsonObj.split(''), {type : 'application/json'})
+
+		function downloadJson(){
+			json_link.href = window.URL.createObjectURL(b1)
+			json_link.download = 'json1'
+		}
+		// downloadJson()
+
+		function downloadJson1(){
+			var fr = new FileReader()
+			fr.onload = function(){
+				json_link.href = `data:;${this.result}`
+			}
+			fr.readAsDataURL(b1)
+			json_link.download = 'json2'
+		}
+		downloadJson1()
+	</script>
+</body>
+</html>

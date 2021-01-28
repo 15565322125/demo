@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="app">
+		<button @click="show = !show">
+			Toggle render
+		</button>
+		<transition
+			name="custom-classes-transition"
+			enter-active-class="animated tada"
+			leave-active-class="animated bounceOutRight"
+		>
+			<p v-if="show">hello</p>
+		</transition>
+	</div>
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: {
+				show: true
+			}
+		})
+	</script>
+</body>
+</html>

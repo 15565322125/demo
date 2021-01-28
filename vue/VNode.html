@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		Element.prototype.render = function(){
+			function renderTree(obj){
+				if(obj instanceof Element){
+					let container = document.createElement(obj.tag)
+					Object.keys(obj.attrs).forEach(item => {
+						container.setAttribute(item, obj.attrs[item])
+					})
+
+					if(Array.isArray(obj.children)){
+						obj.children.forEach(item => {
+							container.appendChild(renderTree(item))
+						})
+					}else{
+						container.appendChild(document.createTextNode(obj.children))
+					}
+					return container
+				}else{
+					return document.createTextNode(obj)
+				}
+			}
+			return renderTree(this)
+		}
+		function Element(tag, attrs, children){
+			this.tag = tag
+			this.attrs = attrs
+			this.children = children || []
+		}
+
+		function createElement(tag, attrs, children){
+			return new Element(tag, attrs, children)
+		}
+
+		let tree = createElement('div', {
+			id: 'app'
+		}, [
+			'先写一些文字',
+    		createElement('h1', {}, [
+    			'一则头条',
+    			createElement('img', { src: '' })
+    		]),
+    		createElement('p', { class: 'txt' }, 'p标签'),
+    		createElement('span', {}, [
+    			createElement('a', { href: '' }, 'a标签'),
+    		])
+		])
+	</script>
+</body>
+</html>

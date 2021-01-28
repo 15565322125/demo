@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		let p1 = new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve(300)
+			}, 300)
+		})
+		let p2 = new Promise((resolve, reject) => {
+			setTimeout(() => {
+				reject(600)
+			}, 600)
+		})
+		let p3 = new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve(900)
+			}, 900)
+		})
+
+		Promise.myAllSettled = function(arr){
+			return new Promise((resolve, reject) => {
+				let result = [],
+					count = 0
+				arr.forEach((item, index, arr) => {
+					Promise.resolve(item).then(res => {
+						result[index] = {
+							status: 'fulfilled',
+							value: res
+						}
+						if(++count === arr.length){
+							resolve(result)
+						}
+					}, err => {
+						result[index] = {
+							status: 'rejected',
+							reason: err
+						}
+						if(++count === arr.length){
+							resolve(result)
+						}
+					})
+				})
+			})
+		}
+		Promise.allSettled([p1, p2, p3]).then(res => {
+			console.log(res)
+		}).catch(err => {
+			console.log(err)
+		})
+
+
+
+
+	</script>
+</body>
+</html>

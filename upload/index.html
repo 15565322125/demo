@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="upload_file">
+    <button id="btn">上传</button>
+    <button id="btn1">上传1</button>
+    <!-- <button id="pause">暂停</button> -->
+    <script>
+        let files,
+            chunkSize = 1024 * 1024,
+            // count = 0,
+            start = 0,
+            end = 0
+        upload_file.onchange = function(){
+            console.log(this.files)
+            files = this.files
+
+            // count = Math.ceil(this.files[0].size / chunkSize)
+        }
+        btn.onclick = function(){
+            if(!files){
+                alert('请选择文件')
+            }
+
+            upload()
+        }
+        btn1.onclick = function(){
+            var fd = new FormData()
+            fd.append('files', files[0])
+            fetch('http://192.168.80.49:8060/review/request/exportResult', {
+                method: 'POST',
+                body: fd
+            }).then(res => {
+                console.log(res);
+                
+            })
+        }
+        function upload(){
+            var finish = start + chunkSize >= files[0].size
+            end = finish ? files[0].size : start + chunkSize
+            var fd = new FormData()
+            fd.append('files', files[0].slice(start, end))
+            // fd.append('finish', finish)
+            start += chunkSize
+
+            fetch('http://192.168.80.49:8060/review/request/exportResult', {
+                method: 'POST',
+                body: fd
+            }).then(res => {
+                console.log(res);
+                if(!finish){
+                    upload()
+
+                }
+            })
+        }
+    </script>
+</body>
+</html>

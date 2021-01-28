@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		class Subject {
+			constructor(){
+				this.state = 1
+				this.observers = []
+			}
+
+			attach(ob){
+				this.observers.push(ob)
+			}
+
+			setState(val){
+				this.state = val
+				this.noticeObservers()
+			}
+
+			noticeObservers(){
+				this.observers.forEach(item => item.update())
+			}
+		}
+
+		class Observer {
+			constructor(name, sub){
+				this.name = name
+				this.sub = sub
+				sub.attach(this)
+			}
+
+			update(){
+				console.log(this.name, this.sub.state)
+			}
+		}
+
+		let s = new Subject()
+
+		let o1 = new Observer('o1', s)
+		let o2 = new Observer('o2', s)
+	</script>
+</body>
+</html>

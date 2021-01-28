@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li @click="switchHandle1">1</li>
+			<li @click="switchHandle2">2</li>
+		</ul>
+		<keep-alive>
+			<component :is="isCom"></component>
+		</keep-alive>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script type="text/javascript">
+		const a = {
+			template: `<div>
+				a
+			</div>`,
+			beforeCreate(){
+				console.log('a beforeCreate')
+			},
+			created(){
+				console.log('a created')
+			},
+			beforeMount(){
+				console.log('a beforeMount')
+			},
+			mounted(){
+				console.log('a mounted')
+			},
+			activated(){
+				console.log('a activated')
+			},
+			deactivated(){
+				console.log('a deactivated')
+			}
+		}
+		const b = {
+			template: `<div>
+				b
+			</div>`,
+			beforeCreate(){
+				console.log('b beforeCreate')
+			},
+			created(){
+				console.log('b created')
+			},
+			beforeMount(){
+				console.log('b beforeMount')
+			},
+			mounted(){
+				console.log('b mounted')
+			},
+			activated(){
+				console.log('b activated')
+			},
+			deactivated(){
+				console.log('b deactivated')
+			}
+		}
+		new Vue({
+			el: '#app',
+			data: {
+				isCom: 'qwe'
+			},
+			components: {
+				qwe: a,
+				asd: b
+			},
+			methods: {
+				switchHandle1(){
+					this.isCom = 'qwe'
+				},
+				switchHandle2(){
+					this.isCom = 'asd'
+				}
+			}
+		})
+	</script>
+</body>
+</html>

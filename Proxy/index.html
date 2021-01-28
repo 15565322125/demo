@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.focus:focus{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="focus">123</div>
+	<input type="" class="focus" value="123" name="">
+	<input type="file" id="upload_file" name="">
+	<video id="vio" controls></video>
+	<script type="text/javascript">
+		upload_file.onchange = function(){
+			console.log(this.files)
+			var fr = new FileReader()
+			fr.onload = function(){
+				vio.src = this.result
+			}
+			fr.readAsDataURL(this.files[0])
+		}
+
+
+
+
+		let obj = {
+			name: 'Lm',
+			age: 20
+		}
+		let p = new Proxy(obj, {
+			get(target, prop, self){
+				console.log(target, prop, self, Reflect)
+				console.log('Proxy get this', this)
+				return target[prop]
+			},
+			set(target, prop, val){
+				console.log(target, prop, val)
+				console.log(Reflect.has(target, prop))
+				console.log('Proxy set this', this)
+				if(Reflect.has(target, prop)){
+					return
+				}
+				return target[target[val] = ++Reflect.ownKeys(target).length] = val
+			}
+		})
+
+
+		function fun(n,o) {
+			console.log(o)
+			return {
+				fun:function(m){
+					return fun(m,n);
+				}
+			};
+		}
+		// var a = fun(0);
+		// a.fun(1)
+		// a.fun(2)
+		// a.fun(3)
+
+		// var b = fun(0).fun(1).fun(2).fun(3);
+
+		// var c = fun(0).fun(1);
+		// c.fun(2);
+		// c.fun(3);
+
+
+		function deepCopy(origin){
+			var target
+			if(typeof(origin) === 'object' && origin !== null){
+				if(origin instanceof Date){
+					target = new Date(origin)
+				}else if(origin instanceof RegExp){
+					let regStr = origin.toString()
+						endIdx = regStr.lastIndexOf('/'),
+					target = new RegExp(regStr.slice(1, endIdx), regStr.slice(endIdx + 1))
+				}else{
+					target = Array.isArray(origin) ? [] : {}
+					for(var key in origin){
+						target[key] = deepCopy(origin[key])
+					}
+				}
+			}else if(typeof(origin) === 'function'){
+				target = function(...args){
+					return origin.apply(this, args)
+				}
+			}else{
+				target = origin
+			}
+			return target
+		}
+		let a = {
+			num: 1,
+			str: 'abc',
+			flag: false,
+			un: undefined,
+			n: null,
+			arr: [1, 2, 3],
+			obj: {
+				a: 'a',
+				b: 'b',
+				c: [1, 2, 3]
+			},
+			fun: function(x, y, z){
+				console.log(this, x, y, z)
+			},
+			date: new Date(),
+			reg: /^1[3-9]\d{9}$/g
+		}
+		let b = deepCopy(a)
+	</script>
+</body>
+</html>

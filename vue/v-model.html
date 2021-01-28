@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<input type="" name="" v-model="message">
+		<base-checkbox v-model="flag"></base-checkbox>
+		{{ flag }}
+		<base-input v-model="iptTxt"></base-input>
+		{{ iptTxt }}
+		<input type="" name="" v-model="msg">
+
+		<base-btn v-model="num"></base-btn>
+		{{ num }}
+	</div>
+
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript">
+		Vue.component('base-checkbox', {
+			model: {
+				prop: 'checked',
+				event: 'change'
+			},
+			props:{
+				checked: Boolean
+			},
+			template: `<div>
+				<input type="checkbox" :checked="checked" @change="$emit('change', $event.target.checked)">
+			</div>`
+		})
+		Vue.component('base-input', {
+			model: {
+				prop: 'val',
+				event: 'blur'
+			},
+			props: {
+				val: String
+			},
+			template: `<div>
+				<input type="text" :value="val" @blur="$emit('blur', $event.target.value)">
+			</div>`
+		})
+		Vue.component('base-btn', {
+			model: {
+				prop: 'myNum',
+				event: 'numEvent'
+			},
+			props: {
+				myNum: Number
+			},
+			template: `<button @click="$emit('numEvent', myNum + 1)">btn {{ myNum }}</button>`
+		})
+
+		new Vue({
+			el: '#app',
+			data: {
+				flag: true,
+				msg: 'abc',
+				iptTxt: '',
+				num: 1
+			},
+			computed: {
+				message: {
+					get(){
+						return 10 //用Vuex中state的值
+					},
+					set(val){
+						console.log(val) //用commit修改Vuex的状态
+					}
+				}
+			},
+			watch: {
+				msg(newVal, oldVal){
+					console.log(newVal, oldVal, this)
+					this.msg = this.$options.filters.capitalize(newVal)
+				}
+			},
+			filters: {
+				capitalize(val){
+					if(!val){
+						return
+					}
+					return val[0].toUpperCase() + val.slice(1)
+				}
+			}
+		})
+
+
+		
+	</script>
+</body>
+</html>
