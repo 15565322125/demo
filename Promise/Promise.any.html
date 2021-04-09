@@ -30,7 +30,7 @@
 						resolve(res)
 					}, err => {
 						if(++count === arr.length){
-							reject('all rejected')
+							reject('AggregateError: All promises were rejected')
 						}
 					})
 				})

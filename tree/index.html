@@ -3,12 +3,129 @@
 <head>
 	<title></title>
 	<style type="text/css">
+		.container{
+			/*display: flex;*/
+			display: grid;
+			/*place-content: center;*/
+			place-items: center;
+			width: 600px;
+			height: 600px;
+			border: 1px solid red;
+		}
+		.box{
+			width: 100px;
+			height: 100px;
+			/*margin: auto;*/
 
+
+			background-color: red;
+		}
 	</style>
 </head>
 <body>
-	
+	<div class="container">
+		<div class="box"></div>
+	</div>
+	<div id="wrap" style="width: 200px; height: 200px; background-color: red;">
+		<div id="container" style="width: 100px; height: 100px; background-color: green;">
+			<div id="box" style="width: 50px; height: 50px; background-color: blue;"></div>
+		</div>
+	</div>
+	<input type="file" multiple name="">
 	<script type="text/javascript">
+		wrap.addEventListener('DOMNodeInserted', function(){
+			console.log('DOMNodeInserted')
+		}, false)
+		wrap.addEventListener('DOMNodeRemoved', function(){
+			console.log('DOMNodeRemoved')
+		}, false)
+
+
+		wrap.addEventListener('click', function(){
+			console.log('wrap true')
+		}, true)
+		container.addEventListener('click', function(){
+			console.log('container true')
+		}, true)
+		box.addEventListener('click', function(){
+			console.log('box true')
+		}, true)
+
+		wrap.addEventListener('click', function(){
+			console.log('wrap false')
+		}, false)
+		container.addEventListener('click', function(){
+			console.log('container false')
+		}, false)
+		box.addEventListener('click', function(){
+			console.log('box false')
+		}, false)
+
+		
+
+		wrap.addEventListener('mouseleave', function(){
+			console.log('wrap true', 'mouseleave')
+		}, true)
+		container.addEventListener('mouseleave', function(){
+			console.log('container true', 'mouseleave')
+		}, true)
+		box.addEventListener('mouseleave', function(){
+			console.log('box true', 'mouseleave')
+		}, true)
+
+		wrap.addEventListener('mouseleave', function(){
+			console.log('wrap false', 'mouseleave')
+		}, false)
+		container.addEventListener('mouseleave', function(){
+			console.log('container false', 'mouseleave')
+		}, false)
+		box.addEventListener('mouseleave', function(){
+			console.log('box false', 'mouseleave')
+		}, false)
+
+
+
+		var digitUppercase = function(n) {
+			var fraction = ['角', '分'];
+			var digit = [
+			'零', '壹', '贰', '叁', '肆',
+			'伍', '陆', '柒', '捌', '玖'
+			];
+			var unit = [
+			['元', '万', '亿'],
+			['', '拾', '佰', '仟']
+			];
+			var head = n < 0 ? '欠' : '';
+			n = Math.abs(n);
+			var s = '';
+			for (var i = 0; i < fraction.length; i++) {
+				s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+			}
+			s = s || '整';
+			n = Math.floor(n);
+			for (var i = 0; i < unit[0].length && n > 0; i++) {
+				var p = '';
+				for (var j = 0; j < unit[1].length && n > 0; j++) {
+					p = digit[n % 10] + unit[1][j] + p;
+					n = Math.floor(n / 10);
+				}
+				s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
+			}
+			return head + s.replace(/(零.)*零元/, '元')
+			.replace(/(零.)+/g, '零')
+			.replace(/^整$/, '零元整');
+		}
+
+		
+
+
+		var oBox = document.getElementsByClassName('box')[0]
+		oBox.addEventListener('click', function(){
+			console.log('click')
+		}, false)
+		oBox.addEventListener('dblclick', function(){
+			console.log('dblclick')
+		}, false)
 		let tree = [
 			{
 				id: '1',
@@ -107,9 +224,9 @@
 				}
 			}
 		}
-		treeForeach(tree, data => {
-			console.log(data)
-		})
+		// treeForeach(tree, data => {
+		// 	console.log(data)
+		// })
 	</script>
 </body>
 </html>

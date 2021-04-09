@@ -13,12 +13,55 @@
 	首页
 	<a href="/about">about</a>
 	<canvas id="cvs" width="600" height="400"></canvas>
+	<input type="file" id="upload_img" name="">
+	<video id="vdo" controls></video>
 	<script type="text/javascript">
 		let ctx = cvs.getContext('2d')
 		let img = new Image()
 		img.src = 'D:/picture/02.jpg'
-		img.onload = function(){
-			ctx.drawImage(img, 0, 0, 600, 400)
+		// img.onload = function(){
+		// 	ctx.drawImage(img, 0, 0, 600, 400)
+		// }
+
+		upload_img.addEventListener('change', function(e){
+			var fr = new FileReader()
+			fr.onload = function(e){
+				/*var img = new Image()
+				img.src = this.result
+				img.onload = function(){
+					ctx.clearRect(0, 0, cvs.width, cvs.height)
+					ctx.drawImage(img, 0, 0)
+					console.log(cvs.toDataURL('image/png'))
+					cvs.toBlob(function(blob){
+						console.log(blob)
+					})
+				}*/
+				
+				vdo.src = this.result
+			}
+			fr.readAsDataURL(this.files[0])
+		}, false)
+
+		vdo.ontimeupdate = function(){
+			// console.log(this.currentTime)
+			
+		}
+
+		
+		var player
+		function loopPlay(){
+			ctx.drawImage(vdo, 0, 0, cvs.width, cvs.height)
+			console.log(123)
+			player = requestAnimationFrame(loopPlay)
+		}
+		vdo.onplay = function(){
+			console.log(123)
+
+			loopPlay()
+		}
+		vdo.onpause = function(){
+			console.log(234)
+			cancelAnimationFrame(player)
 		}
 
 		ctx.lineWidth = 4
@@ -33,8 +76,12 @@
 		ctx.lineTo(0, 400)
 		ctx.lineTo(0, 300)
 		ctx.arc(0, 250, 50, Math.PI / 2, -Math.PI / 2, true)
-		ctx.clip()
+		// ctx.clip()
 
+
+		fetch('http://192.168.80.17:8088/').then(res => res.json()).then(data => {
+			console.log(data)
+		})
 	</script>
 </body>
 </html>

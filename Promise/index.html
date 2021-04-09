@@ -12,8 +12,8 @@
 			// reject('Error')
 
 			setTimeout(() => {
-				resolve(123)
-				// reject('Error')
+				// resolve(123)
+				reject('Error')
 			}, 2000)
 		}).then(res => {
 			console.log(res)
@@ -21,12 +21,20 @@
 				setTimeout(() => {
 					resolve(456)
 				}, 2000)
+			}).then(res => {
+				return res + 2
 			})
 		}, err => {
 			console.log(err)
+			return Promise.reject('hhhhhh')
 		}).then(res => {
 			console.log(1, res)
+		}).catch(err =>{
+			console.log(err)
+		}).finally(res => {
+			console.log(res)
 		})
+
 	</script>
 </body>
 </html>

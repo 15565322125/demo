@@ -38,9 +38,22 @@
 			{{ a }}
 		</div>
 		<input type="text" name="" v-model="ipt">
+		<todolist :data="arr">
+			<template #aaa="{ data }">{{data}}</template>
+		</todolist>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script type="text/javascript">
+		const todolist = {
+			props: ['data'],
+			template: `
+				<ul>
+					<li v-for="item in data" :key="item.value">
+						<slot name="aaa" :data="item"></slot>
+					</li>
+				</ul>
+			`
+		}
 		const temp = {
 			data(){
 				return {
@@ -118,10 +131,18 @@
 				a: 123,
 				b: 234,
 				c: 'abc',
-				flag: false
+				flag: false,
+				arr: [{
+					label: 'a',
+					value: 1
+				}, {
+					label: 'b',
+					value: 2
+				}]
 			},
 			components: {
-				temp
+				temp,
+				todolist
 			},
 			watch: {
 				flag(){

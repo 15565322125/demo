@@ -19,7 +19,7 @@
 		    height: 200px;
 		    background-image: linear-gradient(to bottom, #09f, #f66);
 		    transform: rotate(45deg);
-		    
+
 		}
 		.heart-shape::before,
 		.heart-shape::after {
@@ -39,19 +39,40 @@
 			background-image: linear-gradient(to bottom, #3c9, #09f 50%, transparent 51%, transparent);
 	        transform: translateY(-50%);
 	    }
+
+	    .circle{
+	    	animation: circle 2s ease 1s 2 backwards;
+	    }
+	    @keyframes circle {
+	    	0%{
+	    		background-color: red;
+	    	}
+	    	100%{
+	    		background-color: blue;
+	    	}
+	    }
 	</style>
 </head>
 <body>
-	<div class="heart-shape"></div>
+	<!-- <div class="heart-shape"></div> -->
+	<div class="circle" style="width: 100px; height: 100px;"></div>
 
 
 	<div class="container">
-		<ul>
-			<li v-for="item in 3">{{ item }}</li>
-		</ul>
+
 		<span>{{ num }}</span>
 		<button @click="num++">num</button>
+		<ul>
+			<li v-for="item in obj">{{ item }}</li>
+		</ul>
 	</div>
+	<ul id="list">
+		<li><a href="javascript: ;">1</a></li>
+		<li><a href="javascript: ;">2</a></li>
+		<li><a href="javascript: ;">3</a></li>
+		<li><a href="javascript: ;">4</a></li>
+		<li><a href="javascript: ;">5</a></li>
+	</ul>
 	<span id="arrow">→</span>
 	<script type="text/javascript" src="./vue.js"></script>
 	<script type="text/javascript">
@@ -67,11 +88,148 @@
 		}, false)
 
 
-		new Vue({
+		let vm = new Vue({
 			el: '.container',
 			data: {
-				num: 0
+				num: 0,
+				list: ['a', 'b', 'c'],
+				obj: {
+					a: 1,
+					b: 2,
+					c: 3
+				}
 			}
+		})
+		vm.$on('custom', function(){
+			console.log('abc')
+		})
+		vm.$off('custom')
+		vm.$on('custom', function(){
+			console.log(123)
+		})
+
+
+
+		let obj = {
+			user: {
+				name: "阿宝哥",
+				settings: {
+					theme: "dark",
+				},
+			},
+		}
+
+		function enhancedObject(obj){
+			function searchFor(target, key){
+				if(target[key] !== undefined){
+					return target[key]
+				}else{
+					for(var k in target){
+						if(typeof(target[k]) === 'object'){
+							return searchFor(target[k], key)
+						}
+					}
+				}
+			}
+
+			return new Proxy(obj, {
+				get(target, key){
+					if(key in target){
+						return target[key]
+					}else{
+						return searchFor(target, key)
+					}
+				},
+				set(target, key, value){
+
+				}
+			})
+		}
+		let objPx = enhancedObject(obj)
+
+
+		function freeze (obj) {
+			return new Proxy(obj, {
+				set () { return true; },
+				deleteProperty () { return false; },
+				defineProperty () { return true; },
+				setPrototypeOf () { return true; }
+			});
+		}
+
+
+
+		let a = {
+			i: 0,
+			valueOf(){
+				console.log(this, 'valueOf')
+				// return ++this.i
+				return this
+			},
+			toString(){
+				console.log(this, 'toString')
+				return ++this.i
+			}
+		}
+
+
+		let a1 = {
+			i: 0,
+			fn: () => 'fn',
+			date: new Date()
+		}
+		let ap1 = new Proxy(a1, {})
+
+
+
+		class Event {
+			constructor(){
+				this.events = {}
+			}
+
+			on(type, fn){
+				this.events[type] || (this.events[type] = [])
+				this.events[type].push(fn)
+			}
+
+			off(type, fn){
+				this.events[type] = this.events[type].filter(item => item !== fn)
+			}
+
+			emit(type, ...args){
+				this.events[type].forEach(item => item(...args))
+			}
+
+			once(type, fn){
+				var foo = (...args) => {
+					fn.apply(null, args)
+					this.off(type, foo)
+				}
+
+				this.on(type, foo)
+			}
+		}
+
+		let ev = new Event()
+		ev.once('a', function(a, b){
+			console.log(this, a, b)
+		})
+
+
+		Element.prototype.entrustEvent = function(type, selector, fn){
+			this.addEventListener(type, function(e){
+				var tar = e.target
+				while(!tar.matches(selector)){
+					if(tar === this){
+						return
+					}
+					tar = tar.parentNode
+				}
+				fn.call(e.target, e)
+			}, false)
+		}
+		list.entrustEvent('click', 'li', function(e){
+			console.log(this, e)
 		})
 	</script>
 </body>

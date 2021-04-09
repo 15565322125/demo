@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		@media screen and (min-width: 800px) and (max-width: 1000px) {
+			body{
+				background-color: pink;
+			}
+		}
+		@media screen and (min-width: 600px) {
+			body{
+				/*background-color: skyblue;*/
+			}
+		}
+		html, body{
+			scroll-behavior: smooth;
+		}
+
+		.box{
+			-webkit-background-clip: text;
+			background-image: linear-gradient(180deg, red, blue);
+			color: transparent;
+			font-size: 40px;
+			-webkit-text-stroke: 1px green;
+		}
+
+
+        .progress{
+            position: relative;
+            width: 300px;
+            height: 40px;
+            border: 1px solid red;
+        }
+        .progress > div{
+            position: absolute;
+            top: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+        .mask{
+            position: absolute;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            text-align: center;
+            line-height: 40px;
+        }
+
+	</style>
+</head>
+<body>
+	<div class="box">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+	<button id="btn">123</button>
+	<img src="img/token1.png" onerror="console.log(this)" alt="">
+    <div class="progress">
+        <div class="floor-one" style="left: 0; width: 50%;">
+            
+            <div class="mask" style="left: 0; color: red;">Lorem ipsum dolor</div>
+        </div>
+        <div class="floor-two" style="right: 0; width: 50%;">
+            
+            <div class="mask" style="right: 0;">Lorem ipsum dolor</div>
+        </div>
+    </div>
+    <a href="#area1">1</a>
+    <a href="#area2">2</a>
+    <a href="#area3">3</a>
+    <a href="#area4">4</a>
+    <a href="#area5">5</a>
+    <div id="area1" style="height: 600px; scroll-snap-align: center;">area1</div>
+    <div id="area2" style="height: 600px; scroll-snap-align: center;">area2</div>
+    <div id="area3" style="height: 600px; scroll-snap-align: center;">area3</div>
+    <div id="area4" style="height: 600px; scroll-snap-align: center;">area4</div>
+    <div id="area5" style="height: 600px; scroll-snap-align: center;">area5</div>
+
+    
+	<script type="text/javascript">
+		
+
+		btn.addEventListener('click', function(){
+			console.log(234)
+		}, false)
+		btn.addEventListener('click', function(e){
+			e.stopImmediatePropagation()
+			console.log(123)
+		}, false)
+		btn.addEventListener('click', function(e){
+			e.stopImmediatePropagation()
+			console.log('abc')
+		}, false)
+
+		const obj = {
+			info: {
+				name: ' asyncguo '
+			},
+			address: {
+				province: 'beijing',
+				city: 'beijing',
+				area: 'haidian'
+			}
+		}
+
+		function toUpperCase(str){
+			return str.toUpperCase()
+		}
+		function toTrim(str){
+			return str.trim()
+		}
+
+		function compose(...fns){
+			return fns.reduce((prev, item) => {
+				return (...args) => prev(item(...args))
+			})
+		}
+
+		function traverse(obj, handler){
+			if(typeof(obj) === 'object'){
+				let copy = {}
+				Object.keys(obj).forEach(key => {
+					copy[key] = traverse(obj[key], handler)
+				})
+				return copy
+			}else{
+				return handler(obj)
+			}
+		}
+
+		// console.log(traverse(obj, compose(toUpperCase, toTrim)));
+
+
+
+		const person = { name: 'Lydia' }
+		// console.log(Object.getOwnPropertyDescriptor(person, 'name'))
+		Object.defineProperty(person, 'age', {
+			value: 21
+		})
+		// console.log(Object.getOwnPropertyDescriptor(person, 'age'))
+		// console.log(Object.keys(person))
+
+
+		function flattening(arr){
+			arr = [...arr]
+			let node, result = []
+			while(node = arr.shift()){
+				if(Array.isArray(node)){
+					arr.unshift(...node)
+				}else{
+					result.push(node)
+				}
+			}
+			return result
+		}
+
+		function flattening1(arr){
+			return arr.reduce((prev, item) => {
+				return prev.concat(Array.isArray(item) ? flattening1(item) : item)
+			}, [])
+		}
+
+		let arr = [1, 2, ['a', 'c', ['q', 'w', 'e'], 34], 56]
+
+
+
+		function isType(type){
+			type = type.replace(/([a-z])([a-z]+)/gi, (k, $1, $2) => {
+			    return $1.toUpperCase() + $2.toLowerCase()
+			})
+			return function(tar){
+				return Object.prototype.toString.call(tar) == `[object ${type}]`
+			}
+		}
+		let isFun = isType('Function')
+
+		let i=0
+		let a = {
+			// toString(){
+			// 	return ++i
+			// }
+			valueOf(){
+				return ++i
+			}
+		}
+
+
+
+
+
+		
+		
+
+		function* gene(){
+			var a = yield new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve(123)
+				}, 2000)
+			})
+			console.log(a)
+			var b = yield new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve(234)
+				}, 3000)
+			})
+			console.log(b)
+			return a + b
+		}
+		// let g1 = gene()
+
+		function geneHandle(gene){
+			return new Promise((resolve, reject) => {
+				var g = gene()
+				function next(val){
+					var { value, done } = g.next(val)
+					if(done){
+						resolve(value)
+					}else{
+						Promise.resolve(value).then(res => {
+							next(res)
+						})
+					}
+				}
+				next()
+			})
+		}
+		geneHandle(gene).then(res => {
+			console.log(res)
+		})
+
+
+		// async function foo(){
+			
+		// }
+		// console.log(foo())
+	</script>
+</body>
+</html>

@@ -3,17 +3,27 @@
 <head>
 	<title></title>
 	<style type="text/css">
+		html{
+			font-size: 100px;
+		}
 		.focus:focus{
 			color: red;
+		}
+		#box{
+			width: 1rem;
+			height: 1rem;
+			background-color: skyblue;
 		}
 	</style>
 </head>
 <body>
+	<div id="box"></div>
 	<div class="focus">123</div>
 	<input type="" class="focus" value="123" name="">
 	<input type="file" id="upload_file" name="">
 	<video id="vio" controls></video>
 	<script type="text/javascript">
+		'use strict'
 		upload_file.onchange = function(){
 			console.log(this.files)
 			var fr = new FileReader()
@@ -74,7 +84,7 @@
 				if(origin instanceof Date){
 					target = new Date(origin)
 				}else if(origin instanceof RegExp){
-					let regStr = origin.toString()
+					let regStr = origin.toString(),
 						endIdx = regStr.lastIndexOf('/'),
 					target = new RegExp(regStr.slice(1, endIdx), regStr.slice(endIdx + 1))
 				}else{
@@ -111,6 +121,24 @@
 			reg: /^1[3-9]\d{9}$/g
 		}
 		let b = deepCopy(a)
+
+
+
+
+		function throttle(fn, time){
+			var timer
+			return function(...args){
+				if(timer === undefined || Date.now() - timer >= time){
+					timer = Date.now()
+					fn.apply(this, args)
+				}
+			}
+		}
+		function test(e){
+			console.log(1212, this, e)
+		}
+		let t = throttle(test, 1000)
+		window.addEventListener('resize', t, false)
 	</script>
 </body>
 </html>
