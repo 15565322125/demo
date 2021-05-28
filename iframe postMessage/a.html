@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- https://www.cnblogs.com/dxt510/p/11151744.html -->
+    a
+    <iframe src="b.html" width="" height=""></iframe>
+    <button onclick="sendB()">向b页面传值</button>
+    <script>
+        window.addEventListener('message', function(e){
+            console.log(e);
+        }, false)
+
+        let oIframe = document.getElementsByTagName('iframe')[0]
+
+
+        function sendB(){
+            oIframe.contentWindow.postMessage({name: 'qwe', pwd: 123}, '*')
+        }
+    </script>
+</body>
+</html>

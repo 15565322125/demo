@@ -34,7 +34,7 @@
 		<div v-demo="a"></div>
 		<div v-demo="b"></div>
 		<div v-demo="c"></div> -->
-		<div id="box" v-open="flag">
+		<div id="box" v-open="flag" v-if="controlShow">
 			{{ a }}
 		</div>
 		<input type="text" name="" v-model="ipt">
@@ -111,6 +111,12 @@
 			},
 			update(el, binding, vnode, oldVnode){
 				el.instance.flag = binding.value
+			},
+			componentUpdated(el, binding, vnode, oldVnode){
+				console.log('componentUpdated', el, binding, vnode, oldVnode)
+			},
+			unbind(el, binding, vnode, oldVnode){
+				console.log('unbind', el, binding, vnode, oldVnode)
 			}
 		})
 		Vue.directive('demo', {
@@ -123,6 +129,12 @@
 			},
 			update(el, binding, vnode, oldVnode){
 				console.log('update', el, binding, vnode, oldVnode)
+			},
+			componentUpdated(el, binding, vnode, oldVnode){
+				console.log('componentUpdated', el, binding, vnode, oldVnode)
+			},
+			unbind(el, binding, vnode, oldVnode){
+				console.log('unbind', el, binding, vnode, oldVnode)
 			}
 		})
 		let vm = new Vue({
@@ -138,7 +150,8 @@
 				}, {
 					label: 'b',
 					value: 2
-				}]
+				}],
+				controlShow: true
 			},
 			components: {
 				temp,

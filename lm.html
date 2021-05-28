@@ -46,7 +46,6 @@
             text-align: center;
             line-height: 40px;
         }
-
 	</style>
 </head>
 <body>
@@ -62,11 +61,11 @@
 	<img src="img/token1.png" onerror="console.log(this)" alt="">
     <div class="progress">
         <div class="floor-one" style="left: 0; width: 50%;">
-            
+
             <div class="mask" style="left: 0; color: red;">Lorem ipsum dolor</div>
         </div>
         <div class="floor-two" style="right: 0; width: 50%;">
-            
+
             <div class="mask" style="right: 0;">Lorem ipsum dolor</div>
         </div>
     </div>
@@ -81,9 +80,14 @@
     <div id="area4" style="height: 600px; scroll-snap-align: center;">area4</div>
     <div id="area5" style="height: 600px; scroll-snap-align: center;">area5</div>
 
-    
 	<script type="text/javascript">
-		
+		document.getElementsByClassName('box')[0].addEventListener('dragover', function(e){
+			e.preventDefault()
+		}, false)
+		document.getElementsByClassName('box')[0].addEventListener('drop', function(e){
+			e.preventDefault()
+			console.log(e.dataTransfer, e.dataTransfer.files);
+		}, false)
 
 		btn.addEventListener('click', function(){
 			console.log(234)
@@ -119,6 +123,13 @@
 			return fns.reduce((prev, item) => {
 				return (...args) => prev(item(...args))
 			})
+		}
+		function compose1(...fns){
+			return function(initVal){
+				return fns.reduce((arg, fn, index, arr) => {
+					return fn(arg)
+				}, initVal)
+			}
 		}
 
 		function traverse(obj, handler){
@@ -193,16 +204,18 @@
 
 
 
-		
-		
+
+
 
 		function* gene(){
+
 			var a = yield new Promise((resolve, reject) => {
 				setTimeout(() => {
 					resolve(123)
 				}, 2000)
 			})
 			console.log(a)
+			throw new Error('qweqw')
 			var b = yield new Promise((resolve, reject) => {
 				setTimeout(() => {
 					resolve(234)
@@ -215,29 +228,61 @@
 
 		function geneHandle(gene){
 			return new Promise((resolve, reject) => {
-				var g = gene()
+				try{
+					var g = gene()
+					next()
+				}catch(e){
+					reject(e)
+				}
 				function next(val){
-					var { value, done } = g.next(val)
-					if(done){
-						resolve(value)
-					}else{
-						Promise.resolve(value).then(res => {
-							next(res)
-						})
+					try{
+						var { value, done } = g.next(val)
+						if(done){
+							resolve(value)
+						}else{
+							Promise.resolve(value).then(res => {
+								next(res)
+							})
+						}
+					}catch(e){
+						reject(e)
 					}
 				}
-				next()
 			})
 		}
 		geneHandle(gene).then(res => {
 			console.log(res)
+		}, err => {
+			console.log(err)
 		})
 
 
 		// async function foo(){
-			
+
 		// }
 		// console.log(foo())
+
+
+		let oCanvas = document.createElement('canvas'),
+			ctx = oCanvas.getContext('2d')
+		oCanvas.width = 200
+		oCanvas.height = 100
+		ctx.rotate(-30 * Math.PI / 180)
+		ctx.textBaseline = 'top'
+		let gradient = ctx.createLinearGradient(0, 0, 200, 0)
+		gradient.addColorStop('0', 'red')
+		gradient.addColorStop('0.5', 'green')
+		gradient.addColorStop('1', 'blue')
+		ctx.fillStyle = gradient
+		ctx.font = '16px Microsoft YaHei'
+		ctx.fillText('1231231', 0, 50)
+		console.log()
+
+		// document.body.appendChild(oCanvas)
+
+		document.body.style.backgroundImage = `url(${oCanvas.toDataURL()})`
+
+
 	</script>
 </body>
 </html>

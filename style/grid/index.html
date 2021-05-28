@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.container{
+			display: grid;
+			grid-template-rows: [r1] 100px [r2] 100px [r3] 100px [r4];
+			grid-template-columns: [c1] 100px [c2] 100px [c3] 100px [c4];
+			/*
+				repeat()
+			*/
+			/*grid-template-columns: repeat(3, 33.33%);*/
+			/*grid-template-columns: repeat(2, 100px 50px);*/
+			/*
+				auto-fill
+			*/
+			/*grid-template-columns: repeat(auto-fill, 200px);*//*缩小宽度换行*/
+			/*
+				fr
+			*/
+			/*grid-template-columns: 1fr 200px 1fr;*/
+			/*grid-template-columns: repeat(3, 1fr);*/
+			/*
+				minmax()
+			*/
+			/*grid-template-columns: 1fr 1fr minmax(300px, 1fr);*/
+			/*
+				auto
+			*/
+			/*grid-template-columns: 100px auto 100px;*/
+
+
+			/* 网格线的名称 */
+			/*display: grid;
+			grid-template-rows: [r1] 100px [r2] 100px [r3] 100px [r4];
+			grid-template-columns: [c1] 100px [c2] 100px [c3] 100px [c4 c44 c444];*//*同一根线有多个名称*/
+
+
+			/*grid-row-gap: 20px;
+			grid-column-gap: 40px;*/
+			/*grid-gap: 20px 40px;*/
+			gap: 20px 40px;
+			grid-template-areas: 'a a b'
+                     'b b b'
+                     'c . c';/*如果某个区域不需要用 . 表示*/
+            /*
+				grid-auto-flow
+					row dense
+					column dense
+            */
+            /*grid-auto-flow: column;*/
+            grid-auto-flow: row dense;
+
+            /*
+				justify-items
+				align-items
+				place-items
+					start | center | end | stretch
+            */
+            /*justify-items: center;
+            align-items: start;*/
+            /*place-items: start center;*/
+
+            /*
+				justify-content
+				align-content
+				place-content
+					start | center | end | stretch | space-between | space-around | space-evenly
+            */
+            /*justify-content: center;*/
+            /*align-content: center;*/
+            place-content: start;
+
+            /*
+				grid-auto-rows
+				grid-auto-columns
+            */
+            /*grid-auto-rows: 50px;
+            grid-auto-columns: 50px;*/
+
+		}
+		.item{
+			background-color: #ccc;
+		}
+		.item1{
+			grid-column-start: 1;
+			grid-column-end: 3;
+		}
+		.itme2{
+			/*
+				grid-row-start
+				grid-row-end
+				grid-row
+				grid-column-start
+				grid-column-end
+				grid-column
+			*/
+			grid-column-start: c2;
+			/*grid-column-end: c4;*/
+			/*grid-row-start: span 2;*/
+			grid-column-end: span 2;
+
+			/*grid-row-start: 1;
+			grid-row-end: 3;*/
+			grid-row: 1 / 3;
+
+
+			/*grid-area: a;*//* grid-row-start / grid-column-start / grid-row-end / grid-column-end */
+
+
+			/*
+				justify-self
+				align-self
+				place-self
+			*/
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="item item1">1</div>
+		<div class="item itme2">2</div>
+		<div class="item">3</div>
+		<div class="item">4</div>
+		<div class="item">5</div>
+		<div class="item">6</div>
+		<div class="item">7</div>
+		<div class="item">8</div>
+		<div class="item">9</div>
+		<div class="item">10</div>
+	</div>
+</body>
+</html>

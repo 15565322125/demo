@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		span{
+			color: pink;
+			/*text-decoration: underline;*//* line\color\style\thickness */
+			text-decoration-line: overline line-through underline;
+			text-decoration-color: blue;
+			text-decoration-style: wavy;/*solid\dotted\dashed\wavy*/
+			text-decoration-thickness: 4px;
+		}
+
+		.animation {
+		    position: relative;
+		    text-decoration: none;
+		    overflow: hidden;
+		    cursor: pointer;
+		    line-height: 2;
+		    
+		}
+		.animation::before {
+	        content: attr(data-content);
+	        position: absolute;
+	        top: 0;
+	        left: 0;
+	        color: transparent;
+	        white-space: nowrap;
+	        text-decoration-line: underline;
+	        text-decoration-style: wavy;
+	        text-decoration-color: #000;
+	        z-index: -1;
+	    }
+	    .animation:hover::before {
+	        animation: move 3s infinite linear;
+	    }
+		@keyframes move {
+		    100% {
+		        transform: translate(-50%, 0);
+		    }
+		}
+		
+
+		a{
+			background: linear-gradient(90deg, #0cc 50%, transparent 50%, transparent 1px);
+		    background-size: 10px 2px;
+		    background-repeat: repeat-x;
+		    background-position: 100% 100%;
+		}		
+	</style>
+</head>
+<body>
+	<span>Lorem ipsum dolor sit amet consectetur adipisicing, elit. Rerum eos, aspernatur ab fugit ad unde doloribus libero ullam magni, alias quibusdam molestiae amet odit perferendis dolorem, pariatur minus aut! Magni.</span>
+
+	<p class="animation" data-content="Lorem ibsum dolor Lorem ibsum dolor">Lorem ibsum dolor</p>
+
+	<a href="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Distinctio pariatur consectetur voluptatem rerum modi veritatis, dolorum aut doloremque ipsam eligendi aliquam provident, magnam facilis, molestias neque cupiditate totam eum numquam.
+	Ratione veniam cupiditate quia provident similique rerum dignissimos quisquam laborum eius? Omnis a quis id praesentium delectus nemo totam facere quaerat excepturi dolor laboriosam ex at, minima autem officia quisquam.
+	Ratione hic, optio aut cumque saepe itaque eligendi nesciunt quaerat rerum architecto adipisci natus consequuntur provident voluptatum aliquid, placeat vero quo quia iure laboriosam. Numquam eveniet minima nam autem? Voluptatem!</a>
+	<!-- https://mp.weixin.qq.com/s/nMMw0Yx5DcE1YB1Hxxd6PA -->
+</body>
+</html>

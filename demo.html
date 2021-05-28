@@ -51,6 +51,11 @@
 	    		background-color: blue;
 	    	}
 	    }
+
+	    body{
+	    	background: url(https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2496571732,442429806&fm=26&gp=0.jpg) no-repeat center / 100px auto, url(https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1999921673,816131569&fm=26&gp=0.jpg) no-repeat center / 200px auto, url(https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3228549874,2173006364&fm=26&gp=0.jpg) no-repeat center / 300px auto;
+	    	/*background: url(https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2496571732,442429806&fm=26&gp=0.jpg) no-repeat center / 100px 200px;*/
+	    }
 	</style>
 </head>
 <body>
@@ -231,6 +236,15 @@
 		list.entrustEvent('click', 'li', function(e){
 			console.log(this, e)
 		})
+
+
+		function myIs(x, y){
+			if(x === y){
+				return x !== 0 || 1 / x === 1 / y
+			}else{
+				return x !== x && y !== y
+			}
+		}
 	</script>
 </body>
 </html>

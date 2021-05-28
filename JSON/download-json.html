@@ -17,9 +17,9 @@
 
 		function downloadJson(){
 			json_link.href = window.URL.createObjectURL(b1)
-			json_link.download = 'json1'
+			json_link.download = 'json1.json'
 		}
-		// downloadJson()
+		downloadJson()
 
 		function downloadJson1(){
 			var fr = new FileReader()
@@ -29,7 +29,7 @@
 			fr.readAsDataURL(b1)
 			json_link.download = 'json2'
 		}
-		downloadJson1()
+		// downloadJson1()
 	</script>
 </body>
 </html>

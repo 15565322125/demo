@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="status"></div>
+    <div id="log"></div>
+    <script>
+        /*
+            https://mp.weixin.qq.com/s/EpGQwGnUYZhmhSQk4DjJ7g
+        */
+
+        console.log(navigator.onLine);
+        // onLine: 是否在线
+
+        let connection = navigator.connection,
+            type = connection.effectiveType
+
+        connection.addEventListener('change', function(e){
+            console.log('网络从 ' + type + ' 切换为 ' + connection.effectiveType);
+            type = connection.effectiveType
+        }, false)
+
+
+        let oStatus = document.getElementById('status'),
+            oLog = document.getElementById('log')
+        window.addEventListener('online', networkUpdate, false)
+        window.addEventListener('offline', networkUpdate, false)
+        function networkUpdate(e){
+            console.log(e);
+            var condition = navigator.onLine ? 'online' : 'offline'
+            oStatus.innerHTML = condition.toUpperCase()
+            oLog.insertAdjacentHTML('beforeend', "Event.type: " + e.type + "; Status: " + condition)
+
+            if(navigator.onLine){
+                alert('网络已连接')
+            }else{
+                alert('网络已断开')
+            }
+        }
+    </script>
+</body>
+</html>

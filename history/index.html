@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<a href="#1">1</a>
+	<a href="#2">2</a>
+	<script>
+		window.onhashchange = function(){
+			console.log('hashchange')
+		}
+		window.onpopstate = function(){
+			console.log('popstate')
+		}
+
+		var _wr = function(type) {
+			var orig = history[type];
+			return function() {
+				var rv = orig.apply(this, arguments);
+				var e = new Event(type);
+				e.arguments = arguments;
+				window.dispatchEvent(e);
+				return rv;
+			};
+		};
+		history.pushState = _wr('pushState');
+		history.replaceState = _wr('replaceState');
+
+		window.addEventListener('pushState', function(){
+			console.log('pushState', 1)
+		}, false)
+		window.addEventListener('pushState', demo, false)
+		function demo(){
+			console.log('pushState', 2)
+		}
+		window.removeEventListener('pushState', demo, false)
+
+
+
+
+
+		class EventEmitter {
+			constructor(){
+				this.events = {}
+			}
+
+			on(type, fn){
+				if(!this.events[type]){
+					this.events[type] = []
+				}
+				if(!this.events[type].includes(fn)){
+					this.events[type].push(fn)
+				}
+			}
+
+			off(type, fn){
+				if(this.events[type]){
+					if(!fn){
+						this.events[type].length = 0
+						return
+					}
+					let idx = this.events[type].indexOf(fn)
+					if(idx !== -1){
+						this.events[type].splice(idx, 1)
+					}
+				}
+			}
+
+			once(type, fn){
+				let foo = (...args) => {
+					fn.apply(null, args)
+					this.off(type, foo)
+				}
+				this.on(type, foo)
+			}
+
+			emit(type, ...args){
+				this.events[type] && this.events[type].forEach(fn => fn(...args))
+			}
+		}
+
+		
+		
+		let ev = new EventEmitter()
+		
+	</script>
+</body>
+</html>
