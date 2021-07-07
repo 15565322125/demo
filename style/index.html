@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        :root{
+            --box-width: 200px;
+            --ratio: 2 / 1;
+        }
+
+        /* .box{
+            width: var(--box-width);
+            height: calc(var(--box-width) / var(--ratio));
+            background-color: pink;
+        } */
+        .box{
+            width: var(--box-width);
+            aspect-ratio: 2 / 1;
+            background-color: pink;
+        }
+
+        .container{
+            display: flex;
+        }
+        .container div{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+
+        .demo ~ div{
+            flex-grow: 1;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <div class="container">
+        <div>1</div>
+        <div>2</div>
+        <div class="demo">3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+    </div>
+</body>
+</html>

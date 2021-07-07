@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- https://juejin.cn/post/6974725483195809800 -->
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <input type="file" id="upload" name="" value="">
+    <a href="" id="oBase64" download="Base64-pic">Base64</a>
+    <a href="" id="oBlob" download="Blob-pic">Blob</a>
+    <script type="text/javascript">
+        let ctx = canvas.getContext('2d')
+        upload.addEventListener('change', function(e){
+            var img = new Image()
+            // 跨域图片需要添加这个属性，否则画布被污染了无法导出图片
+            // img.setAttribute('crossOrigin', 'anonymous')
+            img.onload = function(){
+                canvas.width = img.width
+                canvas.height = img.height
+                ctx.drawImage(img, 0, 0, img.width, img.height)
+
+                oBase64.href = canvas.toDataURL()
+                canvas.toBlob(blob => {
+                    oBlob.href = URL.createObjectURL(blob)
+                })
+            }
+            var fr = new FileReader()
+            fr.onload = function(e){
+                img.src = this.result
+            }
+            fr.readAsDataURL(this.files[0])
+        }, false)
+
+    </script>
+</body>
+</html>

@@ -127,6 +127,28 @@
 		}
 		// console.log(myFlat2(arr, 2))
 
+		function myFlat3(arr, count){
+			while(count--){
+				arr = arr.reduce((prev, item, index, arr) => {
+					return prev.concat(item)
+				}, [])
+			}
+			return arr
+		}
+
+
+		function myFlat4(arr){
+			let list = [...arr], node, result = []
+			while(node = list.shift()){
+				if(Array.isArray(node)){
+					list.unshift(...node)
+				}else{
+					result.push(node)
+				}
+			}
+			return result
+		}
+
 
 
 

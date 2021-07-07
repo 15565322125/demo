@@ -2,15 +2,16 @@
 <html>
 <head>
 	<title></title>
+	<!-- <base href="https://www.weibo.com/" target="_blank"> -->
 	<style>
+		@media screen and (min-width: 600px) {
+			body{
+				background-color: skyblue;
+			}
+		}
 		@media screen and (min-width: 800px) and (max-width: 1000px) {
 			body{
 				background-color: pink;
-			}
-		}
-		@media screen and (min-width: 600px) {
-			body{
-				/*background-color: skyblue;*/
 			}
 		}
 		html, body{
@@ -49,6 +50,8 @@
 	</style>
 </head>
 <body>
+	<!-- <a href="jackiechan">成龙</a>
+	<a href="kukoujialing">贾玲</a> -->
 	<div class="box">
 		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -281,7 +284,6 @@
 		// document.body.appendChild(oCanvas)
 
 		document.body.style.backgroundImage = `url(${oCanvas.toDataURL()})`
-
 
 	</script>
 </body>
