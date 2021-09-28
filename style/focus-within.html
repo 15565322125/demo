@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		.container:focus-within{
+			background-color: red;
+		}
+		
+
+
+		input, button {
+		  margin: 10px;
+		}
+
+		.focus-only:focus {
+		  outline: 2px solid black;
+		}
+
+		.focus-visible-only:focus-visible {
+		  outline: 4px dashed darkorange;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<input type="text" name="">
+		<input type="password" name="">
+		<input type="email" name="">
+	</div>
+
+	<input value="Default styles"><br>
+	<button>Default styles</button><br>
+	<input class="focus-only" value=":focus only"><br>
+	<button class="focus-only">:focus only</button><br>
+
+	<input class="focus-visible-only" value=":focus-visible only"><br>
+	<button class="focus-visible-only">:focus-visible only</button>
+
+	
+</body>
+</html>
