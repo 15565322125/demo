@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" accept="image/*" onchange="uploadChange(event)">
+    <img src="" id="preview" alt="">
+    <script>
+        function dataUrlToBlob(base64, mimeType) {
+            let bytes = window.atob(base64.split(",")[1]);
+            console.log('bytes', bytes);
+            let ab = new ArrayBuffer(bytes.length);
+            console.log('ab', ab);
+            let ia = new Uint8Array(ab);
+            console.log('ia', ia);
+            for (let i = 0; i < bytes.length; i++) {
+                ia[i] = bytes.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mimeType });
+        }
+
+        function uploadChange(e){
+            const reader = new FileReader()
+
+            reader.onload = function(){
+                // preview.src = this.result
+                let url = window.URL.createObjectURL(dataUrlToBlob(this.result, e.target.files[0].type))
+                console.log(url);
+                preview.src = url
+            }
+
+            reader.readAsDataURL(e.target.files[0])
+        }
+    </script>
+</body>
+
+</html>
