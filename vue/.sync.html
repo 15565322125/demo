@@ -4,10 +4,54 @@
 	<title></title>
 </head>
 <body>
-	<div id="app"></div>
+	<div id="app">
+		<com-a :abc.sync="a" @abc="abcHandle"></com-a>
+
+	</div>
 	<script type="text/javascript" src="../vue.js"></script>
 	<script type="text/javascript">
-		
+		let comA = {
+			name: 'comA',
+			props: {
+				abc: {
+					type: Number,
+					required: true
+				}
+			},
+			methods: {
+				comAHandle(){
+					this.$emit('update:abc', this.abc + 1)
+				}
+			},
+			
+			template: `
+				<div>
+					{{ abc }}
+					<button @click="comAHandle">click</button>
+					
+				</div>
+			`
+		}
+
+		new Vue({
+			el: '#app',
+			data: {
+				a: 1
+			},
+			watch: {
+				a(newVal, oldVal){
+					console.log(newVal, oldVal)
+				}
+			},
+			components: {
+				comA
+			},
+			methods: {
+				abcHandle(val){
+					console.log(val)
+				}
+			}
+		})
 	</script>
 </body>
 </html>
