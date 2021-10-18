@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+            window.btoa()
+            window.atob()
+
+            在 JavaScript 中，有两个函数被分别用来处理解码和编码 base64 字符串：
+
+            btoa()：从字符串创建一个 base64 编码的 ASCII 字符串，其中字符串中的每个字符都被视为一个二进制数据字节。
+            atob()：该函数能够解码通过 base64 编码的字符串数据。
+        */
+
+        const myName = 'Mindy'
+        const encodeName = window.btoa(myName)
+
+        console.log(encodeName);
+
+        const decodeName = atob(encodeName)
+
+        console.log(decodeName);
+    </script>
+    <!-- 使用第三方库 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/js-base64@3.6.0/base64.min.js"></script> -->
+    <!-- <script>
+        let name = Base64.encode("阿宝哥");
+        console.log(name);
+        console.log(Base64.decode(name));
+    </script> -->
+</body>
+
+</html>
