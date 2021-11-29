@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<img src="" id="oImg" alt="">
+	<video src="https://vd3.bdstatic.com/mda-mf7cs62abknuxmgc/sc/cae_h264_clips/1623143701443539621/mda-mf7cs62abknuxmgc.mp4?auth_key=1637838179-0-0-55901ec4ce9fda590c9679255a29dc0f&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=&klogid=1979365204"></video>
+	<script>
+		function getVideoBase64(url) {
+	        return new Promise(function (resolve, reject) {
+	            let dataURL = '';
+	            let video = document.createElement("video");
+	            video.setAttribute('crossOrigin', 'anonymous');//处理跨域
+	            video.setAttribute('src', url);
+	            video.setAttribute('width', 400);
+	            video.setAttribute('height', 240);
+	            video.setAttribute('preload', 'auto');
+	            video.addEventListener('loadeddata', function () {
+	                let canvas = document.createElement("canvas"),
+	                    width = video.width, //canvas的尺寸和图片一样
+	                    height = video.height;
+	                canvas.width = width;
+	                canvas.height = height;
+	                canvas.getContext("2d").drawImage(video, 0, 0, width, height); //绘制canvas
+	                dataURL = canvas.toDataURL('image/jpeg'); //转换为base64
+	                resolve(dataURL);
+	            });
+	        })
+	    }
+
+	    getVideoBase64('https://vd3.bdstatic.com/mda-mf7cs62abknuxmgc/sc/cae_h264_clips/1623143701443539621/mda-mf7cs62abknuxmgc.mp4?auth_key=1637838179-0-0-55901ec4ce9fda590c9679255a29dc0f&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=&klogid=1979365204').then(res => {
+	    	oImg.src = res
+	    })
+
+
+
+
+
+
+	    // 将图片生成base64
+	    function getImgBase64(url) {
+	        return new Promise(function (resolve, reject) {
+	            let Img = new Image();
+	            let dataURL = '';
+	            Img.src = url;
+	            Img.onload = function () { //确保图片完整获取
+	                var canvas = document.createElement("canvas"),//创建canvas元素
+	                    width = Img.width, //canvas的尺寸和图片一样
+	                    height = Img.height;
+	                canvas.width = width;
+	                canvas.height = height;
+	                canvas.getContext("2d").drawImage(Img, 0, 0, width, height); //绘制canvas
+	                dataURL = canvas.toDataURL('image/jpeg'); //转换为base64
+	                resolve(dataURL);
+	            };
+	        });
+	    }
+	</script>
+</body>
+</html>
