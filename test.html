@@ -18,7 +18,7 @@
         var ctx = canvas.getContext("2d");
 
         var image = new Image();
-        image.src = "img/session.png";
+        image.src = "img/long.jpg";
         //https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2209480182,1928043264&fm=26&gp=0.jpg
         image.onload = function() {
             canvas.width = image.width;
@@ -45,7 +45,7 @@
                         b = imageData[position + 2];
 
                     if (r + g + b == 0) {
-                        ctx.fillStyle = "#000";
+                        ctx.fillStyle = "#f9c";
                         ctx.fillRect(w, h, 4, 4);
                     }
                 }
