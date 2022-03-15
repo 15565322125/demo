@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>counter</title>
+</head>
+<body>
+    <div id="counter"></div>
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+		var start = 2222
+
+		setInterval(() => {
+			$('#counter').prop('counter', start).animate({
+	            counter: start += getRandom(0, 5)
+	        }, {
+	            duration: 2000,
+	            easing: 'swing',
+	            step: function (now) {
+	                now = Math.ceil(now);
+	                now = now.toString();
+	                now = now.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	                $(this).text(now);
+	            }
+	        });
+		}, 5000)
+
+        function getRandom(min, max){
+            return Math.round(Math.random() * (max - min)) + min
+        }
+
+	</script>
+</body>
+</html>
