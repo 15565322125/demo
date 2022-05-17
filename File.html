@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<!-- https://developer.mozilla.org/zh-CN/docs/Web/API/File/File -->
+	<input type="file" id="upload_img" name="">
+	<img src="" id="my_img">
+	<!--
+		var myFile = new File(bits, name[, options]);
+		bits
+			一个包含ArrayBuffer，ArrayBufferView，Blob，或者 DOMString 对象的 Array — 或者任何这些对象的组合。这是 UTF-8 编码的文件内容。
+		name
+			USVString，表示文件名称，或者文件路径。
+		options 可选
+			选项对象，包含文件的可选属性。可用的选项如下：
+				type: DOMString，表示将要放到文件中的内容的 MIME 类型。默认值为 "" 。
+				lastModified: 数值，表示文件最后修改时间的 Unix 时间戳（毫秒）。默认值为 Date.now()。
+
+		示例
+			var file = new File(["foo"], "foo.txt", {
+			  	type: "text/plain",
+			});
+	-->
+	<script>
+		upload_img.onchange = function(){
+			
+			var fr = new FileReader()
+			fr.onload = function(){
+				console.log(this.result)
+				// my_img.src = this.result
+
+				var file = new File([this.result], "01.jpg", {
+					type: "image/png",
+				});
+				console.log(file)
+
+				my_img.src = URL.createObjectURL(file)
+			}
+			fr.readAsArrayBuffer(this.files[0])
+		}
+	</script>
+</body>
+</html>

@@ -29,7 +29,8 @@ function getDirTree(path){
 http.createServer((req, res) => {
 	// res.setHeader("Access-Control-Allow-Origin","*");
 	res.writeHeader(200, {
-		'Access-Control-Allow-Origin': '*'
+		'Access-Control-Allow-Origin': '*',
+		'Content-Type': 'application/json; charset=utf-8'
 	})
-	res.end(JSON.stringify(getDirTree('../plugin/')));
+	res.end(JSON.stringify(getDirTree('../')));
 }).listen(8088)
