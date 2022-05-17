@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 查找节点
+        function treeFind(tree, func) {
+            for (const data of tree) {
+                if (func(data)) return data
+                if (data.children) {
+                    const res = treeFind(data.children, func)
+                    if (res) return res
+                }
+            }
+            return null
+        }
+
+        // 查找节点路径
+        function treeFindPath(tree, func, path = []) {
+            if (!tree) return []
+            for (const data of tree) {
+                path.push(data.id)
+                if (func(data)) return path
+                if (data.children) {
+                    const findChildren = treeFindPath(data.children, func, path)
+                    if (findChildren.length) return findChildren
+                }
+                path.pop()
+            }
+            return []
+        }
+
+        // 查找多条节点路径
+        function treeFindPath(tree, func, path = [], result = []) {
+            for (const data of tree) {
+                path.push(data.id)
+                func(data) && result.push([...path])
+                data.children && treeFindPath(data.children, func, path, result)
+                path.pop()
+            }
+            return result
+        }
+
+    </script>
+</body>
+
+</html>
