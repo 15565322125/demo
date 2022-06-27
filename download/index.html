@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <!-- https://juejin.cn/post/6974725483195809800 -->
     <canvas id="canvas" width="300" height="300"></canvas>
@@ -14,11 +16,11 @@
     <a href="" id="oBlob" download="Blob-pic">Blob</a>
     <script type="text/javascript">
         let ctx = canvas.getContext('2d')
-        upload.addEventListener('change', function(e){
+        upload.addEventListener('change', function (e) {
             var img = new Image()
             // 跨域图片需要添加这个属性，否则画布被污染了无法导出图片
             // img.setAttribute('crossOrigin', 'anonymous')
-            img.onload = function(){
+            img.onload = function () {
                 canvas.width = img.width
                 canvas.height = img.height
                 ctx.drawImage(img, 0, 0, img.width, img.height)
@@ -29,12 +31,52 @@
                 })
             }
             var fr = new FileReader()
-            fr.onload = function(e){
+            fr.onload = function (e) {
                 img.src = this.result
             }
             fr.readAsDataURL(this.files[0])
         }, false)
 
+
+
+        // 使用图片地址进行下载
+        // 1.
+        export const downloadImg = (url, fileName) => {
+            const x = new XMLHttpRequest()
+            x.open('GET', url, true)
+            x.responseType = 'blob'
+            // eslint-disable-next-line func-names
+            x.onload = function () {
+                const resultUrl = window.URL.createObjectURL(x.response)
+                const a = document.createElement('a')
+                a.href = resultUrl
+                a.download = fileName
+                a.click()
+            }
+            x.send()
+        }
+
+        // 2.
+        var downloadIamge = function (imgsrc, name) {//下载图片地址和图片名
+            let image = new Image();
+            // 解决跨域 Canvas 污染问题
+            image.setAttribute("crossOrigin", "anonymous");
+            image.onload = function () {
+                let canvas = document.createElement("canvas");
+                canvas.width = image.width;
+                canvas.height = image.height;
+                let context = canvas.getContext("2d");
+                context.drawImage(image, 0, 0, image.width, image.height);
+                let url = canvas.toDataURL("image/png"); //得到图片的base64编码数据
+                let a = document.createElement("a"); // 生成一个a元素
+                let event = new MouseEvent("click"); // 创建一个单击事件
+                a.download = name || "photo"; // 设置图片名称
+                a.href = url; // 将生成的URL设置为a.href属性
+                a.dispatchEvent(event); // 触发a的单击事件
+            };
+            image.src = imgsrc;
+        }
     </script>
 </body>
+
 </html>
