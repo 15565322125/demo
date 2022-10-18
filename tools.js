@@ -14,6 +14,27 @@ export function formatDate(date){
     return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
 }
 
+function formatDate(date = new Date(), format = 'YYYY/MM/DD hh:mm:ss'){
+    var timeUnit = {
+        YYYY: date.getFullYear(),
+        MM: date.getMonth() + 1,
+        DD: date.getDate(),
+        hh: date.getHours(),
+        mm: date.getMinutes(),
+        ss: date.getSeconds()
+    }
+    Object.keys(timeUnit).forEach(unit => {
+        format = format.replace(unit, function(kw){
+            if(timeUnit[kw] < 10){
+                return (timeUnit[kw] + '').padStart(2, 0)
+            }else{
+                return timeUnit[kw]
+            }
+        })
+    })
+    return format
+}
+
 
 // 生成随机整数
 export function getRandom(min, max){
