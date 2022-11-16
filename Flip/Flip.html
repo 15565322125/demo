@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flip</title>
+    <style>
+        .container{
+        }
+        .box{
+            width: 400px;
+            height: 50px;
+            margin-bottom: 10px;
+            border: 1px solid pink;
+            background-color: skyblue;
+            color: #fff;
+            border-radius: 10px;
+        }
+        .moving{
+            border: 1px dashed #ccc;
+            background-color: transparent;
+        }
+        .mask{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+        }
+        .mask.active{
+            position: absolute;
+            top: 10%;
+            left: calc(100% / 2 - 300px / 2);
+            width: 300px;
+            height: 500px;
+            background-color: pink;
+        }
+
+        .btns{
+            position: absolute;
+            top: 50%;
+            left: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box" draggable="true">1</div>
+        <div class="box" draggable="true">2</div>
+        <div class="box" draggable="true">3</div>
+        <div class="box" draggable="true">4</div>
+        <div class="box" draggable="true">5</div>
+        <div class="box" draggable="true">6</div>
+    </div>
+    <div class="mask"></div>
+    <div class="btns">
+        <button id="add">add</button>
+        <button id="remove">remove</button>
+        <button id="rect">rect</button>
+    </div>
+    <script src="./Flip.js"></script>
+    <script>
+        var container = document.getElementsByClassName('container')[0]
+        var boxs = container.children
+
+        let sourceTarget
+        container.addEventListener('dragstart', function(e){
+            if(e.target.classList.contains('box')){
+                e.dataTransfer.effectAllowed = 'move'
+                sourceTarget = e.target
+                setTimeout(() => {
+                    e.target.classList.add('moving')
+                }, 0)
+            }
+        }, false)
+        container.addEventListener('dragover', function(e){
+            if(e.target.classList.contains('box')){
+                e.preventDefault()
+            }
+        }, false)
+        container.addEventListener('dragend', function(e){
+            if(e.target.classList.contains('box')){
+                e.target.classList.remove('moving')
+            }
+        }, false)
+
+        container.addEventListener('dragenter', function(e){
+            if(e.target.classList.contains('box') && sourceTarget != e.target){
+                let bs = Array.from(boxs)
+                if(bs.indexOf(sourceTarget) > bs.indexOf(e.target)){
+                    console.log('down');
+                    container.insertBefore(sourceTarget, e.target)
+                }else{
+                    console.log('up');
+                    container.insertBefore(e.target, sourceTarget)
+                }
+                f12.Play()
+            }
+        }, false)
+
+        
+        var f12 = new Flip(boxs)
+
+        add.addEventListener('click', function(){
+            var box = document.createElement('div')
+            box.classList.add('box')
+            box.draggable = true
+            container.insertAdjacentElement('beforeend', box)
+
+
+            f12.Play()
+        }, false)
+
+        remove.addEventListener('click', function(){
+            container.removeChild(boxs[Math.floor(boxs.length * Math.random())])
+            f12.Play()
+        }, false)
+
+        
+        console.log(container.getBoundingClientRect());
+        rect.addEventListener('click', function(){
+            console.log(container.getBoundingClientRect());
+        }, false)
+
+
+        
+
+        /* 
+            top: -84
+            right: 1895
+            bottom: 228
+            left: 8
+
+            height: 312
+            width: 1887
+            x: 8
+            y: -84
+        */
+
+
+        var oMask = document.getElementsByClassName('mask')[0]
+        var f11 = new Flip([oMask])
+        oMask.addEventListener('click', function(){
+            this.classList.toggle('active')
+            f11.Play()
+        }, false)
+    </script>
+</body>
+</html>
